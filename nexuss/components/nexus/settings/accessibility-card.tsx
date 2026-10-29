@@ -195,6 +195,19 @@ export function AccessibilityCard() {
             <p className="text-xs text-muted-foreground">
               Assigned to Sarah Chen · SLA remaining: 2h 45m
             </p>
+            <div className="flex items-center justify-between gap-2 pt-2 border-t border-border/60 text-xs">
+              <span className="text-muted-foreground">Motion animation status:</span>
+              <span className="flex items-center gap-1.5 font-medium text-foreground">
+                <span
+                  className={cn(
+                    'size-2 rounded-full bg-primary',
+                    !prefs.reduceMotion && 'animate-pulse'
+                  )}
+                  aria-hidden="true"
+                />
+                {prefs.reduceMotion ? 'Animations Off (Instant)' : 'Animations On (Smooth)'}
+              </span>
+            </div>
           </div>
         </div>
 

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { X } from 'lucide-react'
+import { cn } from '@/lib/utils'
 import { useNexus } from './nexus-provider'
 import { AppSidebar } from './app-sidebar'
 import { TopBar } from './top-bar'
@@ -49,35 +50,50 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </a>
 
       {/* Desktop sidebar */}
-      {desktopSidebarOpen && (
+      <div
+        className={cn(
+          'hidden lg:flex shrink-0 sticky top-0 h-dvh transition-all duration-300 ease-in-out overflow-hidden',
+          desktopSidebarOpen ? 'w-64 opacity-100' : 'w-0 opacity-0 pointer-events-none'
+        )}
+      >
         <AppSidebar
           onClose={() => setDesktopSidebarOpen(false)}
-          className="hidden lg:flex sticky top-0"
+          className="w-64"
         />
-      )}
+      </div>
 
-      {/* Mobile Drawer */}
-      {mobileNavOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          <div
-            className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
-            onClick={() => setMobileNavOpen(false)}
-            aria-hidden="true"
+      {/* Mobile Drawer with smooth slide & fade animation */}
+      <div
+        className={cn(
+          'fixed inset-0 z-50 lg:hidden transition-all duration-300',
+          mobileNavOpen ? 'pointer-events-auto visible' : 'pointer-events-none invisible'
+        )}
+        aria-hidden={!mobileNavOpen}
+      >
+        <div
+          className={cn(
+            'fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity duration-300 ease-in-out',
+            mobileNavOpen ? 'opacity-100' : 'opacity-0'
+          )}
+          onClick={() => setMobileNavOpen(false)}
+          aria-hidden="true"
+        />
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Navigation drawer"
+          className={cn(
+            'relative flex h-full w-72 max-w-[85vw] flex-col bg-sidebar text-sidebar-foreground shadow-2xl transition-transform duration-300 ease-in-out',
+            mobileNavOpen ? 'translate-x-0' : '-translate-x-full'
+          )}
+        >
+          <AppSidebar
+            onNavigate={() => setMobileNavOpen(false)}
+            onClose={() => setMobileNavOpen(false)}
+            className="w-full h-full"
           />
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-label="Navigation drawer"
-            className="relative flex h-full w-72 max-w-[85vw] flex-col bg-sidebar text-sidebar-foreground shadow-2xl"
-          >
-            <AppSidebar
-              onNavigate={() => setMobileNavOpen(false)}
-              onClose={() => setMobileNavOpen(false)}
-              className="w-full h-full"
-            />
-          </div>
         </div>
-      )}
+      </div>
 
       <div className="flex min-w-0 flex-1 flex-col">
         <TopBar

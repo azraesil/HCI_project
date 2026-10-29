@@ -202,12 +202,15 @@ html[data-contrast="high"] *:focus-visible {
 }
 
 /* c) Reduce Motion */
+html[data-motion="reduce"],
 html[data-motion="reduce"] *,
 html[data-motion="reduce"] *::before,
 html[data-motion="reduce"] *::after {
   animation-duration: 0.01ms !important;
   animation-iteration-count: 1 !important;
+  animation-delay: 0ms !important;
   transition-duration: 0.01ms !important;
+  transition-delay: 0ms !important;
   scroll-behavior: auto !important;
 }
 
@@ -218,12 +221,15 @@ html[data-motion="reduce"] .animate-spin {
 
 /* d) Respect OS prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
+  html,
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
     scroll-behavior: auto !important;
   }
   .animate-spin {
