@@ -23,7 +23,7 @@ export default function SettingsPage() {
   if (!user) return null
 
   return (
-    <div className="space-y-8 max-w-5xl w-full">
+    <div className="space-y-8 max-w-6xl xl:max-w-7xl w-full">
       <PageHeader
         title="Settings & System Configuration"
         description="Manage user profile settings, notification routing, escalation triggers, and security controls."
