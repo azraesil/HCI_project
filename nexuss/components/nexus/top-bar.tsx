@@ -24,7 +24,13 @@ import { useNexus } from './nexus-provider'
 import { GlobalSearch } from './global-search'
 import { UserAvatar } from './badges'
 
-export function TopBar({ onMenuClick }: { onMenuClick?: () => void } = {}) {
+export function TopBar({
+  onMenuClick,
+  sidebarOpen = true,
+}: {
+  onMenuClick?: () => void
+  sidebarOpen?: boolean
+} = {}) {
   const { user, tenantId, setTenantId, signIn, signOut, visibleTickets, now } = useNexus()
   const router = useRouter()
   const [readIds, setReadIds] = useState<string[]>([])
@@ -81,8 +87,12 @@ export function TopBar({ onMenuClick }: { onMenuClick?: () => void } = {}) {
         <button
           type="button"
           onClick={onMenuClick}
-          aria-label="Open navigation"
-          className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary lg:hidden cursor-pointer"
+          aria-label={sidebarOpen ? 'Close navigation' : 'Open navigation'}
+          title={sidebarOpen ? 'Close navigation' : 'Open navigation'}
+          className={cn(
+            'flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer',
+            sidebarOpen && 'lg:hidden'
+          )}
         >
           <Menu className="size-5" aria-hidden="true" />
         </button>

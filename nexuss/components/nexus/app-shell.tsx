@@ -11,6 +11,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const { user } = useNexus()
   const router = useRouter()
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
+  const [desktopSidebarOpen, setDesktopSidebarOpen] = useState(true)
 
   useEffect(() => {
     if (!user) router.replace('/')
@@ -48,7 +49,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </a>
 
       {/* Desktop sidebar */}
-      <AppSidebar className="hidden lg:flex sticky top-0" />
+      {desktopSidebarOpen && (
+        <AppSidebar
+          onClose={() => setDesktopSidebarOpen(false)}
+          className="hidden lg:flex sticky top-0"
+        />
+      )}
 
       {/* Mobile Drawer */}
       {mobileNavOpen && (
@@ -64,21 +70,26 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             aria-label="Navigation drawer"
             className="relative flex h-full w-72 max-w-[85vw] flex-col bg-sidebar text-sidebar-foreground shadow-2xl"
           >
-            <button
-              type="button"
-              onClick={() => setMobileNavOpen(false)}
-              aria-label="Close navigation"
-              className="absolute top-3.5 right-3.5 z-10 flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg text-sidebar-muted hover:text-sidebar-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring cursor-pointer"
-            >
-              <X className="size-5" aria-hidden="true" />
-            </button>
-            <AppSidebar onNavigate={() => setMobileNavOpen(false)} className="w-full h-full" />
+            <AppSidebar
+              onNavigate={() => setMobileNavOpen(false)}
+              onClose={() => setMobileNavOpen(false)}
+              className="w-full h-full"
+            />
           </div>
         </div>
       )}
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <TopBar onMenuClick={() => setMobileNavOpen(true)} />
+        <TopBar
+          sidebarOpen={desktopSidebarOpen}
+          onMenuClick={() => {
+            if (typeof window !== 'undefined' && window.innerWidth >= 1024) {
+              setDesktopSidebarOpen((prev) => !prev)
+            } else {
+              setMobileNavOpen((prev) => !prev)
+            }
+          }}
+        />
         <main id="main" className="flex-1 px-4 sm:px-6 lg:px-8 py-5 lg:py-7">
           {children}
         </main>

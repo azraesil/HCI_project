@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { BarChart3, Building2, LayoutDashboard, ListChecks, Settings, SquarePen, UserCheck, Users } from 'lucide-react'
+import { BarChart3, Building2, LayoutDashboard, ListChecks, Settings, SquarePen, UserCheck, Users, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { Role } from '@/lib/nexus-data'
 import { useNexus } from './nexus-provider'
@@ -45,9 +45,11 @@ const NAV: NavItem[] = [
 export function AppSidebar({
   className,
   onNavigate,
+  onClose,
 }: {
   className?: string
   onNavigate?: () => void
+  onClose?: () => void
 } = {}) {
   const pathname = usePathname()
   const { user, visibleTickets } = useNexus()
@@ -68,8 +70,19 @@ export function AppSidebar({
 
   return (
     <aside className={cn('flex h-dvh w-64 shrink-0 flex-col bg-sidebar text-sidebar-foreground', className)} aria-label="Primary">
-      <div className="flex h-16 items-center gap-2.5 border-b border-sidebar-border px-5">
+      <div className="flex h-16 items-center justify-between border-b border-sidebar-border px-4">
         <NexusLogo />
+        {onClose && (
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close sidebar"
+            title="Close sidebar"
+            className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg text-sidebar-muted hover:bg-sidebar-accent hover:text-sidebar-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring cursor-pointer transition-colors"
+          >
+            <X className="size-5" aria-hidden="true" />
+          </button>
+        )}
       </div>
       <nav className="flex-1 overflow-y-auto px-3 py-4">
         <p className="px-3 pb-2 text-xs font-semibold uppercase tracking-wider text-sidebar-muted">Workspace</p>
