@@ -106,7 +106,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             }
           }}
         />
-        <main id="main" className="flex-1 px-4 sm:px-6 lg:px-8 py-5 lg:py-7">
+        <main id="main" className="flex-1 px-4 sm:px-6 py-5 lg:py-7">
           {children}
         </main>
       </div>

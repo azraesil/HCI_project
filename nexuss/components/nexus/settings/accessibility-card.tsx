@@ -131,16 +131,42 @@ export function AccessibilityCard() {
               Stronger borders and text colors for easier reading.
             </div>
           </div>
-          <div className="relative inline-flex items-center shrink-0">
-            <input
-              type="checkbox"
-              role="switch"
-              aria-checked={prefs.highContrast}
-              checked={prefs.highContrast}
-              onChange={(e) => updatePrefs({ highContrast: e.target.checked })}
-              className="sr-only peer"
-            />
-            <div className="w-11 h-6 bg-slate-200 peer-focus-visible:outline-none peer-focus-visible:ring-3 peer-focus-visible:ring-primary/30 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary" />
+          <div className="flex items-center gap-2.5 shrink-0">
+            <span
+              className={cn(
+                'text-xs font-bold px-2 py-0.5 rounded-md transition-colors',
+                prefs.highContrast
+                  ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
+                  : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-300 dark:border-slate-700'
+              )}
+            >
+              {prefs.highContrast ? 'ON' : 'OFF'}
+            </span>
+            <div className="relative inline-flex items-center">
+              <input
+                type="checkbox"
+                role="switch"
+                aria-checked={prefs.highContrast}
+                checked={prefs.highContrast}
+                onChange={(e) => updatePrefs({ highContrast: e.target.checked })}
+                className="sr-only"
+              />
+              <div
+                className={cn(
+                  'w-12 h-7 rounded-full transition-colors duration-200 flex items-center p-1 cursor-pointer border',
+                  prefs.highContrast
+                    ? 'bg-emerald-500 dark:bg-emerald-500 border-emerald-600 dark:border-emerald-400 shadow-xs'
+                    : 'bg-slate-300 dark:bg-slate-700 border-slate-400 dark:border-slate-600'
+                )}
+              >
+                <div
+                  className={cn(
+                    'size-5 rounded-full bg-white shadow-md transform transition-transform duration-200',
+                    prefs.highContrast ? 'translate-x-5' : 'translate-x-0'
+                  )}
+                />
+              </div>
+            </div>
           </div>
         </label>
 
@@ -154,16 +180,42 @@ export function AccessibilityCard() {
               Turns off animations and transitions. Loading spinners stay visible.
             </div>
           </div>
-          <div className="relative inline-flex items-center shrink-0">
-            <input
-              type="checkbox"
-              role="switch"
-              aria-checked={prefs.reduceMotion}
-              checked={prefs.reduceMotion}
-              onChange={(e) => updatePrefs({ reduceMotion: e.target.checked })}
-              className="sr-only peer"
-            />
-            <div className="w-11 h-6 bg-slate-200 peer-focus-visible:outline-none peer-focus-visible:ring-3 peer-focus-visible:ring-primary/30 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary" />
+          <div className="flex items-center gap-2.5 shrink-0">
+            <span
+              className={cn(
+                'text-xs font-bold px-2 py-0.5 rounded-md transition-colors',
+                prefs.reduceMotion
+                  ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
+                  : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-300 dark:border-slate-700'
+              )}
+            >
+              {prefs.reduceMotion ? 'ON' : 'OFF'}
+            </span>
+            <div className="relative inline-flex items-center">
+              <input
+                type="checkbox"
+                role="switch"
+                aria-checked={prefs.reduceMotion}
+                checked={prefs.reduceMotion}
+                onChange={(e) => updatePrefs({ reduceMotion: e.target.checked })}
+                className="sr-only"
+              />
+              <div
+                className={cn(
+                  'w-12 h-7 rounded-full transition-colors duration-200 flex items-center p-1 cursor-pointer border',
+                  prefs.reduceMotion
+                    ? 'bg-emerald-500 dark:bg-emerald-500 border-emerald-600 dark:border-emerald-400 shadow-xs'
+                    : 'bg-slate-300 dark:bg-slate-700 border-slate-400 dark:border-slate-600'
+                )}
+              >
+                <div
+                  className={cn(
+                    'size-5 rounded-full bg-white shadow-md transform transition-transform duration-200',
+                    prefs.reduceMotion ? 'translate-x-5' : 'translate-x-0'
+                  )}
+                />
+              </div>
+            </div>
           </div>
         </label>
 
