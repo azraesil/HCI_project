@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState, useEffect } from 'react'
+import { useMemo, useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import {
   Check,
@@ -69,6 +69,16 @@ export function TicketForm() {
   const [showSavedToast, setShowSavedToast] = useState(false)
   const [restoredToast, setRestoredToast] = useState<string | null>(null)
   const [isDraftsOpen, setIsDraftsOpen] = useState(false)
+  const [clearedDraftsUndo, setClearedDraftsUndo] = useState<{ drafts: DraftItem[]; count: number } | null>(null)
+  const clearDraftsTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  useEffect(() => {
+    return () => {
+      if (clearDraftsTimeoutRef.current) {
+        clearTimeout(clearDraftsTimeoutRef.current)
+      }
+    }
+  }, [])
 
   // Sayfa yüklendiğinde mevcut taslakları oku
   useEffect(() => {
@@ -154,12 +164,41 @@ export function TicketForm() {
     }
   }
 
-  // Tüm taslakları temizle
+  // Tüm taslakları temizle (Undo desteğiyle)
   const handleClearAllDrafts = () => {
+    if (drafts.length === 0) return
+    const backup = [...drafts]
+    const count = backup.length
+
+    if (clearDraftsTimeoutRef.current) {
+      clearTimeout(clearDraftsTimeoutRef.current)
+    }
+
+    setClearedDraftsUndo({ drafts: backup, count })
     setDrafts([])
     localStorage.removeItem(DRAFTS_KEY)
     setActiveDraftId(null)
     setIsDraftsOpen(false)
+
+    clearDraftsTimeoutRef.current = setTimeout(() => {
+      setClearedDraftsUndo(null)
+    }, 6000)
+  }
+
+  // Taslak silme işlemini geri al (Undo)
+  const handleUndoClearDrafts = () => {
+    if (!clearedDraftsUndo) return
+    if (clearDraftsTimeoutRef.current) {
+      clearTimeout(clearDraftsTimeoutRef.current)
+    }
+
+    setDrafts(clearedDraftsUndo.drafts)
+    localStorage.setItem(DRAFTS_KEY, JSON.stringify(clearedDraftsUndo.drafts))
+    const restoredCount = clearedDraftsUndo.count
+    setClearedDraftsUndo(null)
+
+    setRestoredToast(`${restoredCount} draft${restoredCount > 1 ? 's' : ''} restored!`)
+    setTimeout(() => setRestoredToast(null), 3000)
   }
 
   // Formu sıfırla
@@ -520,6 +559,25 @@ export function TicketForm() {
           </div>
         </aside>
       </form>
+
+      {/* Undo Toast Notification (Consistent with Kanban Board) */}
+      {clearedDraftsUndo && (
+        <div
+          role="status"
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 rounded-xl bg-navy px-4 py-2.5 text-sm font-medium text-white shadow-xl border border-slate-700/60"
+        >
+          <span>
+            {clearedDraftsUndo.count} draft{clearedDraftsUndo.count > 1 ? 's' : ''} cleared
+          </span>
+          <button
+            type="button"
+            onClick={handleUndoClearDrafts}
+            className="rounded-lg bg-white/15 px-3 py-1 text-xs font-semibold text-white transition-colors hover:bg-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-navy cursor-pointer"
+          >
+            Undo
+          </button>
+        </div>
+      )}
     </>
   )
 }
