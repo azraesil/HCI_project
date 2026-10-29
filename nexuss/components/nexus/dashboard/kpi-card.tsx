@@ -46,7 +46,7 @@ export function KpiCard({
       </div>
       <p className="mt-2 font-mono text-3xl font-bold tracking-tight text-foreground tabular-nums">{value}</p>
       <div className={cn('mt-2 flex items-center justify-between text-xs', tone === 'danger' ? 'font-medium text-danger-ink dark:text-red-400' : 'text-muted-foreground')}>
-        <span className="truncate">{sub}</span>
+        <span className="truncate" title={sub}>{sub}</span>
         {href && (
           <ArrowRight className="size-3.5 shrink-0 text-muted-foreground/60 transition-transform group-hover:translate-x-0.5 group-hover:text-primary" aria-hidden="true" />
         )}

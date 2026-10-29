@@ -35,7 +35,14 @@ export default async function RootLayout({
   const initialRole = cookieRole && ROLES.includes(cookieRole) ? cookieRole : null
 
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrains.variable} bg-background`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${jetbrains.variable} bg-background`}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var raw=localStorage.getItem('nexus-a11y');if(raw){var p=JSON.parse(raw);var doc=document.documentElement;if(p.textSize&&['default','large','xlarge'].indexOf(p.textSize)!==-1){doc.setAttribute('data-text-size',p.textSize);}if(p.highContrast){doc.setAttribute('data-contrast','high');}if(p.reduceMotion){doc.setAttribute('data-motion','reduce');}}}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body className="antialiased">
         <NexusProvider initialRole={initialRole}>{children}</NexusProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}

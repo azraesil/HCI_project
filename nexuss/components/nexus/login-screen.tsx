@@ -276,7 +276,7 @@ export function LoginScreen() {
                     type="button"
                     onClick={() => enter(r, r)}
                     disabled={pending !== null}
-                    className="flex items-center gap-2.5 p-2.5 rounded-xl border border-border/80 bg-card hover:bg-muted/70 hover:border-primary/50 text-left transition-all shadow-2xs group disabled:opacity-60"
+                    className="flex min-h-[52px] items-center gap-2.5 p-2.5 rounded-xl border border-border/80 bg-card hover:bg-muted/70 hover:border-primary/50 text-left transition-all shadow-2xs group disabled:opacity-60"
                   >
                     <div className="size-8 rounded-lg flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-xs bg-slate-900 group-hover:bg-primary transition-colors">
                       {pending === r ? (

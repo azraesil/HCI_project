@@ -15,7 +15,7 @@ export function TicketTable({ tickets, now }: { tickets: Ticket[]; now: number }
   return (
     <div className="overflow-hidden rounded-xl border bg-card shadow-xs">
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[700px] text-sm">
+        <table className="w-full min-w-[800px] text-sm">
         <caption className="sr-only">Tickets</caption>
         <thead className="bg-muted/60 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           <tr>
@@ -50,7 +50,7 @@ export function TicketTable({ tickets, now }: { tickets: Ticket[]; now: number }
                     {overdue && <OverdueTag />}
                     <span className="text-xs text-muted-foreground">{formatRelative(t.createdAt, now)}</span>
                   </div>
-                  <p className="mt-0.5 max-w-md truncate font-medium text-foreground">{t.title}</p>
+                  <p className="mt-0.5 max-w-md truncate font-medium text-foreground" title={t.title}>{t.title}</p>
                 </td>
                 <td className="px-3 py-3 text-foreground">{companyById(t.companyId)?.name}</td>
                 <td className="px-3 py-3 text-muted-foreground">{CATEGORY_LABEL[t.category]}</td>

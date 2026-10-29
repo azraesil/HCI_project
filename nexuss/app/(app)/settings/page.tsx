@@ -6,6 +6,7 @@ import { useNexus } from '@/components/nexus/nexus-provider'
 import { PageHeader } from '@/components/nexus/app-shell'
 import { ROLE_LABEL } from '@/lib/nexus-data'
 import { cn } from '@/lib/utils'
+import { AccessibilityCard } from '@/components/nexus/settings/accessibility-card'
 
 export default function SettingsPage() {
   const { user } = useNexus()
@@ -49,6 +50,9 @@ export default function SettingsPage() {
             </div>
           </div>
         </div>
+
+        {/* Accessibility & Display Settings (HCI Project) */}
+        <AccessibilityCard />
 
         {/* Notification & SLA Escalation Rules */}
         <div className="p-6 rounded-2xl border border-border/80 bg-card/80 backdrop-blur-xs shadow-xs space-y-5">

@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useMemo, useState, useEffect } from 'react'
-import { Bell, Building2, ChevronDown, LogOut, Plus, RefreshCw, AlertTriangle, UserCheck, Moon, Sun, Menu } from 'lucide-react'
+import { Bell, Building2, ChevronDown, LogOut, Plus, RefreshCw, AlertTriangle, UserCheck, Moon, Sun, Menu, Eye } from 'lucide-react'
 import { Button, buttonVariants } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -76,7 +76,7 @@ export function TopBar({ onMenuClick }: { onMenuClick?: () => void } = {}) {
   }
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center gap-2.5 sm:gap-4 border-b bg-card/95 px-4 sm:px-6 backdrop-blur supports-[backdrop-filter]:bg-card/80">
+    <header className="sticky top-0 z-30 flex min-h-16 h-auto py-2 items-center gap-2.5 sm:gap-4 border-b bg-card/95 px-4 sm:px-6 backdrop-blur supports-[backdrop-filter]:bg-card/80">
       {onMenuClick && (
         <button
           type="button"
@@ -237,7 +237,7 @@ export function TopBar({ onMenuClick }: { onMenuClick?: () => void } = {}) {
         {/* Profile & Role Switcher */}
         <DropdownMenu>
           <DropdownMenuTrigger
-            render={<Button variant="ghost" className="h-11 gap-2.5 pr-2 pl-1.5 cursor-pointer" aria-label={`Account menu for ${user.name}`} />}
+            render={<Button variant="ghost" className="min-h-11 h-auto py-1.5 gap-2.5 pr-2 pl-1.5 cursor-pointer" aria-label={`Account menu for ${user.name}`} />}
           >
             <UserAvatar user={user} />
             <span className="hidden text-left leading-tight xl:block">
@@ -252,6 +252,16 @@ export function TopBar({ onMenuClick }: { onMenuClick?: () => void } = {}) {
                 <span className="block text-sm font-semibold text-foreground">{user.name}</span>
                 <span className="block font-normal">{user.email}</span>
               </DropdownMenuLabel>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem
+                className="min-h-10 cursor-pointer"
+                onClick={() => router.push('/settings#accessibility')}
+              >
+                <Eye className="size-4" aria-hidden="true" />
+                Accessibility settings
+              </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>

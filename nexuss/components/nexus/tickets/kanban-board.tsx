@@ -184,7 +184,7 @@ export function KanbanBoard({ tickets }: { tickets: Ticket[]; now: number }) {
                       {/* Alt Satır: Sadece Atanan Kişi */}
                       <div className="flex items-center justify-end pt-2 border-t border-border/40">
                         <div className="flex items-center gap-2">
-                          <span className="text-xs text-muted-foreground font-medium truncate max-w-[140px]">
+                          <span className="text-xs text-muted-foreground font-medium truncate max-w-[170px]" title={assignee ? assignee.name : 'Unassigned'}>
                             {assignee ? assignee.name : 'Unassigned'}
                           </span>
                           <UserAvatar user={assignee} size="sm" />

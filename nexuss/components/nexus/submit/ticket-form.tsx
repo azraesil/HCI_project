@@ -343,7 +343,7 @@ export function TicketForm() {
       )}
 
       <form onSubmit={onSubmit} noValidate className="grid grid-cols-1 lg:grid-cols-[1fr_300px] items-start gap-6">
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 min-w-0">
           <FormStep n={1} title="Where is the issue?" description="Scope the ticket to the right project so it reaches the right team." complete={step1}>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex flex-col gap-1.5">

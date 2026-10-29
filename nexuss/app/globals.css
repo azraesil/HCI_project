@@ -165,3 +165,69 @@
     @apply bg-background text-foreground font-sans;
   }
 }
+
+/* ==========================================================================
+   Accessibility & Display Customizations (HCI Project)
+   ========================================================================== */
+
+/* a) Text Size */
+html[data-text-size="large"] {
+  font-size: 112.5%;
+}
+
+html[data-text-size="xlarge"] {
+  font-size: 125%;
+}
+
+/* b) High Contrast */
+html[data-contrast="high"] {
+  --muted-foreground: #1e293b;
+  --border: #64748b;
+  --input: #475569;
+  --primary: #1d4ed8;
+  --ring: #1d4ed8;
+}
+
+html.dark[data-contrast="high"],
+html[data-contrast="high"].dark {
+  --muted-foreground: #e2e8f0;
+  --border: #94a3b8;
+  --input: #cbd5e1;
+  --ring: #93c5fd;
+}
+
+html[data-contrast="high"] *:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* c) Reduce Motion */
+html[data-motion="reduce"] *,
+html[data-motion="reduce"] *::before,
+html[data-motion="reduce"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+html[data-motion="reduce"] .animate-spin {
+  animation-duration: 1s !important;
+  animation-iteration-count: infinite !important;
+}
+
+/* d) Respect OS prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-spin {
+    animation-duration: 1s !important;
+    animation-iteration-count: infinite !important;
+  }
+}
